@@ -3,7 +3,7 @@ var router = express.Router();
 
 const mysql = require('mysql2/promise');
 const dbConfig = {
-  host: 'localhost',
+  host: '127.0.0.1',
   user: 'root',
   password: 'root',
   database: 'TECHTHON'
@@ -11,9 +11,8 @@ const dbConfig = {
 
 /* 商品在庫登録 */
 router.post('/create/single', async (req, res, next) => {
-  let conn;
+  let conn = await mysql.createConnection(dbConfig);
   try {
-    conn = await mysql.createConnection(dbConfig);
     await conn.beginTransaction();
 
     const [rows1, fields1] = await conn.query('INSERT INTO stock set ?', req.body);
@@ -39,9 +38,8 @@ router.post('/create/single', async (req, res, next) => {
 
 /* 商品在庫詳細 */
 router.get('/detail/:id?', async (req, res, next) => {
-  let conn;
+  let conn = await mysql.createConnection(dbConfig);
   try {
-    conn = await mysql.createConnection(dbConfig);
 
     const [rows1, fields1] = await conn.execute('select id, name, price, on_sale, count from stock where id = ?', [req.params.id]);
 

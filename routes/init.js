@@ -3,7 +3,7 @@ var router = express.Router();
 
 const mysql = require('mysql2/promise');
 const dbConfig = {
-  host: 'localhost',
+  host: '127.0.0.1',
   user: 'root',
   password: 'root',
   database: 'TECHTHON'
@@ -11,9 +11,8 @@ const dbConfig = {
 
 /* PUT */
 router.put('/', async (req, res, next) => {
-  let conn;
+  let conn = await mysql.createConnection(dbConfig);
   try {
-    conn = await mysql.createConnection(dbConfig);
     await conn.beginTransaction();
 
     const [rows1] = await conn.execute('DROP TABLE IF EXISTS stock', []);
