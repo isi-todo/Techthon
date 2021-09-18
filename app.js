@@ -11,6 +11,12 @@ var usersRouter = require('./routes/users');
 var checkRouter = require('./routes/check');
 // Add End ISI)todo #1
 
+// Add Start ISI)todo #2
+var initRouter = require('./routes/init');
+var stockRouter = require('./routes/stock');
+// Add End ISI)todo #2
+
+
 var app = express();
 
 // view engine setup
@@ -29,6 +35,11 @@ app.use('/users', usersRouter);
 // Add Start ISI)todo #1
 app.use('/check', checkRouter);
 // Add End ISI)todo #1
+
+// Add Start ISI)todo #2
+app.use('/init', initRouter);
+app.use('/stock', stockRouter);
+// Add End ISI)todo #2
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
