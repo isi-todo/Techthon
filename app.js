@@ -16,6 +16,10 @@ var initRouter = require('./routes/init');
 var stockRouter = require('./routes/stock');
 // Add End ISI)todo #2
 
+// Add Start ISI)todo #4
+var purchaseRouter = require('./routes/purchase');
+// Add End ISI)todo #4
+
 
 var app = express();
 
@@ -40,6 +44,10 @@ app.use('/check', checkRouter);
 app.use('/init', initRouter);
 app.use('/stock', stockRouter);
 // Add End ISI)todo #2
+
+// Add Start ISI)todo #4
+app.use('/purchase', purchaseRouter);
+// Add End ISI)todo #4
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

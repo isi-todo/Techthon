@@ -187,4 +187,32 @@ router.delete('/delete/:id', async (req, res, next) => {
   }
 });
 
+/* 商品在庫一括登録 */
+router.post('/create/multiple', async (req, res, next) => {
+  let conn = await mysql.createConnection(dbConfig);
+  try {
+    await conn.beginTransaction();
+    for(let item of req.body.items) {
+      const [rows1, fields1] = await conn.query('INSERT INTO stock set ?', item);
+    }
+
+    await conn.commit();
+    console.log('insert multi completed');
+
+    res.json({
+      status_code: 201,
+      method: 'POST'
+    });
+  } catch (e) {
+    await conn.rollback();
+    console.log(e)
+    res.json({
+      status_code: 400,
+      method: 'POST'
+    })
+  } finally {
+    conn.end();
+  }
+});
+
 module.exports = router;
