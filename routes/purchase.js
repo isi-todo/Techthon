@@ -14,7 +14,7 @@ router.get('/detail/:id?', async (req, res, next) => {
   let conn = await mysql.createConnection(dbConfig);
   try {
 
-    const [rows1, fields1] = await conn.execute('select id, bought_at, staff_name from purchase where id = ?', [req.params.id]);
+    const [rows1, fields1] = await conn.execute('select id, DATE_FORMAT(bought_at,\'%Y-%m-%dT%T\') as bought_at, staff_name from purchase where id = ?', [req.params.id]);
     const [rows2, fields2] = await conn.execute('select a.stock_id, b.name, a.price, a.bought_count from purchase_item a, stock b where a.stock_id = b.id and a.purchase_id = ? order by a.stock_id', [req.params.id])
 
     console.log('select completed');
